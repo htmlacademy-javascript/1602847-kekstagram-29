@@ -6,7 +6,7 @@ function checkPalindrome(inputString){
     if (typeof inputString === 'number') {
         inputString += ''
     }
-    let clearString = inputString.toLowerCase().replaceAll(" ", "");
+    let clearString = inputString.toLowerCase().replaceAll(' ', '');
     let firstPointer = 0;
     let lastPointer = clearString.length;
 
