@@ -9,11 +9,16 @@
 
 <body>
   <main>
+    <script src="./js/main.js" type="module" async></script>
     <script type="text/javascript" src="./js/functions.js" async></script>
-    <section class="check-length" style="margin-block: 10%; padding: 2%; border: 1px solid #424242;">
-      <p class="check-length paragraph">В случае, где исходная строка - "проверяемая строка", а параметр длины - 20 результат проверки <span class="check-length-result"></span></p>
-      <p class="check-length paragraph">В случае, где исходная строка - "проверяемая строка", а параметр длины - 18 результат проверки <span class="check-length-result"></span></p>
-      <p class="check-length paragraph">В случае, где исходная строка - "проверяемая строка", а параметр длины - 10 результат проверки <span class="check-length-result"></span></p>
+    <!-- Фильтрация изображений от других пользователей -->
+    <section class="img-filters  img-filters--inactive  container">
+      <h2 class="img-filters__title  visually-hidden">Фильтр фотографий</h2>
+      <form class="img-filters__form" action="index.html" method="get" autocomplete="off">
+        <button type=button class="img-filters__button  img-filters__button--active" id="filter-default">По умолчанию</button>
+        <button type=button class="img-filters__button" id="filter-random">Случайные</button>
+        <button type=button class="img-filters__button" id="filter-discussed">Обсуждаемые</button>
+      </form>
     </section>
     <section class="check-palindrome" style="margin-block: 10%; padding: 2%; border: 1px solid #424242;">
       <p class="check-palindrome paragraph">В случае, где исходная строка - "топот" результат проверки <span class="check-palindrome-result"></span></p>

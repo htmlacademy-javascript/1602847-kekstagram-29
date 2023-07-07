@@ -1,29 +1,24 @@
-function checkLength(inputString, statementLength) {
-    return inputString.length <= statementLength;
+function timeStampToMinutes(timeStamp) {
+  const trimmedTimestamp = timeStamp.split(':');
+  if (typeof timeStamp === 'string' && trimmedTimestamp.length <= 2) {
+    trimmedTimestamp[0] = Number(trimmedTimestamp[0]);
+    trimmedTimestamp[1] = Number(trimmedTimestamp[1]);
+    return Number(trimmedTimestamp[0] * 60 + trimmedTimestamp[1]);
+  }
+  return null;
 }
+//Я бы вынес его в utils, но тогда не получится импорт заюзать по ТЗ
 
-function checkPalindrome(inputString){
-    if (typeof inputString === 'number') {
-        inputString += ''
-    }
-    let clearString = inputString.toLowerCase().replaceAll(" ", "");
-    let firstPointer = 0;
-    let lastPointer = clearString.length;
-
-    for (let pointer = firstPointer; pointer < lastPointer/2; pointer++) {
-        if (clearString[pointer] !== clearString[lastPointer-1-pointer]) {
-            return false;
-        }
-    }
-    return true
+function checkShiftMatch(shiftStart, shiftEnd, meetStart, meetDuration){
+  const timeData = {
+    shiftStart: timeStampToMinutes(shiftStart),
+    shiftEnd: timeStampToMinutes(shiftEnd),
+    meetStart: timeStampToMinutes(meetStart),
+    meetEnd: timeStampToMinutes(meetStart) + meetDuration
+  };
+  if(timeData.shiftStart <= timeData.meetStart && timeData.shiftEnd >= timeData.meetEnd) {
+    return true;
+  }
+  return false;
 }
-
-document.getElementsByClassName('check-length-result')[0].innerHTML = checkLength('проверяемая строка', 20);
-document.getElementsByClassName('check-length-result')[1].innerHTML = checkLength('проверяемая строка', 18);
-document.getElementsByClassName('check-length-result')[2].innerHTML = checkLength('проверяемая строка', 10);
-
-document.getElementsByClassName('check-palindrome-result')[0].innerHTML = checkPalindrome('топот');
-document.getElementsByClassName('check-palindrome-result')[1].innerHTML = checkPalindrome('ДовОд');
-document.getElementsByClassName('check-palindrome-result')[2].innerHTML = checkPalindrome('Кекс');
-document.getElementsByClassName('check-palindrome-result')[3].innerHTML = checkPalindrome('Лёша на полке клопа нашёл ');
-document.getElementsByClassName('check-palindrome-result')[4].innerHTML = checkPalindrome(2023);
+checkShiftMatch('08:00', '17:30', '14:00', 90);
