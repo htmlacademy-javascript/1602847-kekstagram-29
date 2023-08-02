@@ -30,5 +30,7 @@ function checkPalindrome(inputString){
   }
   return true;
 }
+const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEnterKey = (evt) => evt.key === 'Enter';
 
-export {getRandomInteger, checkLength, checkPalindrome};
+export {getRandomInteger, checkLength, checkPalindrome, isEscapeKey, isEnterKey};
