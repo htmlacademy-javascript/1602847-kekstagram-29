@@ -1,4 +1,5 @@
 import {generateUniqueID, generateImageData} from './data.js';
+import { openUserModal } from './fullPicture.js';
 
 const generateImageId = generateUniqueID({min: 0, max: 25});
 const generateUrlId = generateUniqueID({min: 0, max: 25});
@@ -19,6 +20,10 @@ for (const photo in photosData) {
   photoElement.querySelector('.picture__likes').textContent = photosData[photo].likes;
   photoElement.querySelector('.picture__comments').textContent = photosData[photo].comments.length;
   photoListFragment.appendChild(photoElement);
+  photoElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    openUserModal(photosData[photo]);
+  });
 }
 
 photoContainer.appendChild(photoListFragment);
