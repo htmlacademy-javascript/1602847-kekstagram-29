@@ -1408,3 +1408,13 @@ main {
 .hidden {
   display: none;
 }
+
+.pristine-error {
+  color: #e90000;
+  background-color: #ffffff;
+  border-radius: 5px;
+  width: 450px;
+  margin: 0 auto;
+  font-family: "Open Sans", "Arial", sans-serif;
+  margin-bottom: 10px;
+}
