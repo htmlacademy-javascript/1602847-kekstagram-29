@@ -2,6 +2,7 @@ const slider = document.querySelector('.effect-level__slider');
 const effectInput = document.querySelector('.effect-level__value');
 const imageNode = document.querySelector('.img-upload__preview > img');
 const activeEffects = document.querySelectorAll('.effects__radio');
+const sliderParent = document.querySelector('.img-upload__effect-level');
 
 const effects = {
   grayscale: {
@@ -57,7 +58,7 @@ const effects = {
 };
 
 function resetParams() {
-  slider.classList.add('hidden');
+  sliderParent.classList.add('hidden');
   imageNode.removeAttribute('style');
 }
 
@@ -70,9 +71,10 @@ noUiSlider.create(slider, {
   }
 });
 
+
 activeEffects.forEach((effect) => {
   effect.addEventListener('change', () => {
-    slider.classList.remove('hidden');
+    sliderParent.classList.remove('hidden');
     switch (effect.value) {
       case 'chrome':
         effect = effects.grayscale;
@@ -105,6 +107,6 @@ activeEffects.forEach((effect) => {
     } catch {
       imageNode.removeAttribute('style');
     }
+
   });
 });
-
