@@ -4,10 +4,11 @@ const bigPicture = document.querySelector('.big-picture');
 const closeModal = document.querySelector('.big-picture__cancel');
 const imageNode = document.querySelector('.big-picture__img > img');
 const likesNode = document.querySelector('.likes-count');
-const commentsCount = document.querySelector('.comments-count');
+const commentsCount = document.querySelector('.social__comment-count');
 const commentsParentNode = document.querySelector('.social__comments');
 
 const commentsLoader = document.querySelector('.comments-loader');
+let commentsInModalQty = 0;
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -17,17 +18,32 @@ const onDocumentKeydown = (evt) => {
 };
 
 function clearPreviousComments() {
+  commentsInModalQty = 0;
   while(commentsParentNode.hasChildNodes()){
     commentsParentNode.firstChild.remove();
   }
 }
 
-function loadComments(comments) {
-  clearPreviousComments();
-  for (const comment in comments) {
-    const commentNode = createComment(comments[comment]);
+function loadComments(comments, lastQty) {
+  commentsInModalQty = lastQty + 5;
+  if(comments.length <= commentsInModalQty) {
+    commentsLoader.classList.add('hidden');
+    commentsInModalQty = comments.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
+  commentsCount.classList.remove('hidden');
+  commentsCount.textContent = `${commentsInModalQty} из ${comments.length} комментариев`;
+
+  const commentsInModal = comments.slice(lastQty, commentsInModalQty);
+
+
+  for (const comment in commentsInModal) {
+    const commentNode = createComment(commentsInModal[comment]);
     commentsParentNode.appendChild(commentNode);
   }
+
+  return commentsInModalQty;
 }
 
 function createComment (comment) {
@@ -53,23 +69,27 @@ function createComment (comment) {
 function openUserModal (photoData) {
   bigPicture.classList.remove('hidden');
 
-  commentsCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
-
   document.body.classList.add('modal-open');
 
   imageNode.src = photoData.url;
   imageNode.alt = photoData.description;
   likesNode.textContent = photoData.likes;
   commentsCount.textContent = photoData.comments.length;
-  loadComments(photoData.comments);
+  clearPreviousComments();
+
+  let lastCommsQty = loadComments(photoData.comments, 0);
 
   document.addEventListener('keydown', onDocumentKeydown);
+  commentsLoader.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    lastCommsQty = loadComments(photoData.comments, lastCommsQty);
+  });
 }
 
 function closeUserModal () {
   bigPicture.classList.add('hidden');
 
+  commentsLoader.removeEventListener('click', () => {});
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
