@@ -7,7 +7,6 @@ function timeStampToMinutes(timeStamp) {
   }
   return null;
 }
-//Я бы вынес его в utils, но тогда не получится импорт заюзать по ТЗ
 
 function checkShiftMatch(shiftStart, shiftEnd, meetStart, meetDuration){
   const timeData = {

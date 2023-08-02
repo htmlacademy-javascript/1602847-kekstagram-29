@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="./vendor/nouislider/nouislider.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кекстаграм</title>
 </head>
@@ -13,6 +14,8 @@
   <main>
     <script src="./js/main.js" type="module" async></script>
     <script type="text/javascript" src="./js/functions.js" async></script>
+    <script src="./vendor/pristine/pristine.min.js"></script>
+    <script src="./vendor/nouislider/nouislider.js"></script>
     <!-- Фильтрация изображений от других пользователей -->
     <section class="img-filters  img-filters--inactive  container">
       <h2 class="img-filters__title  visually-hidden">Фильтр фотографий</h2>
@@ -31,11 +34,11 @@
       <section class="img-upload">
         <div class="img-upload__wrapper">
           <h2 class="img-upload__title  visually-hidden">Загрузка фотографии</h2>
-          <form class="img-upload__form" id="upload-select-image" autocomplete="off">
+          <form class="img-upload__form" method="POST" enctype="multipart/form-data" action="https://29.javascript.pages.academy/kekstagram " id="upload-select-image" autocomplete="off">
 
             <!-- Изначальное состояние поля для загрузки изображения -->
             <fieldset class="img-upload__start">
-              <input type="file" id="upload-file" class="img-upload__input  visually-hidden" name="filename" required>
+              <input type="file" id="upload-file" class="img-upload__input  visually-hidden" name="filename" accept="image/png, image/jpeg" required>
               <label for="upload-file" class="img-upload__label  img-upload__control">Загрузить</label>
             </fieldset>
 
@@ -117,10 +120,13 @@
                 <!-- Добавление хэш-тегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
                   <div class="img-upload__field-wrapper">
-                    <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
+                    <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег" required>
                   </div>
                   <div class="img-upload__field-wrapper">
-                    <textarea class="text__description" name="description" placeholder="Ваш комментарий..."></textarea>
+                     <textarea class="text__description" name="description" placeholder="Ваш комментарий..."
+                    data-pristine-maxlength="165"
+                    data-pristine-maxlength-message="Длина комментария не может быть больше 165 символов."
+                    ></textarea>
                   </div>
                 </fieldset>
 
