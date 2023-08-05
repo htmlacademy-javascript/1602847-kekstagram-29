@@ -1,4 +1,7 @@
 import {isEscapeKey} from './utils.js';
+import { sendData } from './fetch.js';
+import { showError } from './utils.js';
+import { resetParams } from './slider.js';
 
 const formNode = document.querySelector('.img-upload__form');
 const formModal = document.querySelector('.img-upload__overlay');
@@ -6,12 +9,36 @@ const photoChoose = document.querySelector('.img-upload__input');
 const closeButton = document.querySelector('.img-upload__cancel');
 const userHashTags = document.querySelector('.text__hashtags');
 const userComment = document.querySelector('.text__description');
+const submitButton = document.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(formNode, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper-error-wrapper',
 });
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+function submitForm(form, onSuccess) {
+  const isValid = pristine.validate();
+  if (isValid) {
+    blockSubmitButton();
+    sendData(form)
+      .then(onSuccess)
+      .catch(
+        (err) => {
+          showError(err.message);
+        }
+      )
+      .finally(unblockSubmitButton);
+  }
+}
 
 function onDocumentKeydown(event) {
   if (isEscapeKey(event)) {
@@ -26,7 +53,7 @@ function stopPropOnEsc(event) {
   }
 }
 
-function formOpen () {
+function formOpen() {
   formModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
@@ -35,12 +62,12 @@ function formOpen () {
   userComment.addEventListener('keydown', (evt) => stopPropOnEsc(evt));
 }
 
-function formClose () {
+function formClose() {
   formModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
   formNode.reset();
-
+  resetParams(false);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
@@ -74,5 +101,8 @@ formNode.addEventListener('submit', (evt) => {
 });
 photoChoose.addEventListener('input', formOpen);
 closeButton.addEventListener('click', formClose);
+formNode.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
-
+  submitForm(evt.target, formClose());
+});

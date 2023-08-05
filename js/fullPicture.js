@@ -58,7 +58,7 @@ function createComment (comment) {
 
   const commentTextNode = document.createElement('p');
   commentTextNode.classList.add('social__text');
-  commentTextNode.textContent = comment.text;
+  commentTextNode.textContent = comment.message;
 
   commentNode.appendChild(commentImgNode);
   commentNode.appendChild(commentTextNode);

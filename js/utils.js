@@ -33,4 +33,14 @@ function checkPalindrome(inputString){
 const isEscapeKey = (evt) => evt.key === 'Escape';
 const isEnterKey = (evt) => evt.key === 'Enter';
 
-export {getRandomInteger, checkLength, checkPalindrome, isEscapeKey, isEnterKey};
+function showError(errText) {
+  const errFragment = document.createDocumentFragment();
+  const errTemplate = document.querySelector('#error').content.querySelector('.error');
+  const errNode = errTemplate.cloneNode(true);
+  const errTextNode = errNode.querySelector('.error__title');
+  errTextNode.textContent = errText;
+  errFragment.appendChild(errNode);
+  document.body.appendChild(errNode);
+}
+
+export {getRandomInteger, checkLength, checkPalindrome, isEscapeKey, isEnterKey, showError};

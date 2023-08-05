@@ -57,8 +57,10 @@ const effects = {
   }
 };
 
-function resetParams() {
-  sliderParent.classList.add('hidden');
+function resetParams(full) {
+  if(full){
+    sliderParent.classList.add('hidden');
+  }
   imageNode.removeAttribute('style');
 }
 
@@ -92,7 +94,7 @@ activeEffects.forEach((effect) => {
         effect = effects.brightness;
         break;
       case 'none':
-        resetParams();
+        resetParams(true);
     }
     try {
       slider.noUiSlider.updateOptions ({
@@ -110,3 +112,5 @@ activeEffects.forEach((effect) => {
 
   });
 });
+
+export { resetParams };
